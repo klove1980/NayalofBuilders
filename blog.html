@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="images/Favicon.png">
+    <title>Blog - Nayalof Builders</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .blog-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-md);
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: var(--spacing-lg);
+        }
+        .blog-main {
+            min-width: 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-lg);
+        }
+        @media (max-width: 768px) {
+            .blog-main {
+                grid-template-columns: 1fr;
+            }
+        }
+        .blog-sidebar {
+            min-width: 0;
+        }
+        .blog-post-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-post-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+        .blog-post-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        .blog-post-content {
+            padding: var(--spacing-md);
+        }
+        .blog-post-meta {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-bottom: var(--spacing-sm);
+        }
+        .blog-post-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.3;
+        }
+        .blog-post-excerpt {
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: var(--spacing-md);
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+        }
+        .blog-read-more {
+            display: inline-block;
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .blog-read-more:hover {
+            color: var(--primary-blue-dark);
+        }
+        .sidebar-widget {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+        .sidebar-widget h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 2px solid var(--border-color);
+        }
+        .category-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .category-item {
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .category-item:last-child {
+            border-bottom: none;
+        }
+        .category-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: color 0.3s;
+        }
+        .category-link:hover {
+            color: var(--primary-blue);
+        }
+        .category-count {
+            background: var(--primary-blue-light);
+            color: var(--primary-blue);
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        @media (max-width: 968px) {
+            .blog-container {
+                grid-template-columns: 1fr;
+            }
+            .blog-sidebar {
+                order: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Nayalof Builders</a>
+            <ul class="nav-menu">
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link">Home Improvement <span class="dropdown-arrow">▼</span></a>
+                    <ul class="dropdown-menu">
+<li><a href="shed.html">Storage Shed</a></li>
+                    <li><a href="batting-cage.html">Batting Cage</a></li>
+                    <li><a href="residential-renovations.html">Residential Renovations</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link">New Construction <span class="dropdown-arrow">▼</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="adu.html">Accessory Dwelling Unit (Granny-Flat)</a></li>
+                        <li><a href="index.html#car-garage">Car Garage <img src="images/ComingSoon.png" alt="Coming Soon" style="height: 32px; vertical-align: middle; margin-left: 4px;"></a></li>
+                        <li><a href="index.html#single-family">Single-Family Residential <img src="images/ComingSoon.png" alt="Coming Soon" style="height: 32px; vertical-align: middle; margin-left: 4px;"></a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link">Learn More <span class="dropdown-arrow">▼</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="how-it-works.html">How It Works</a></li>
+                        <li><a href="calculator.html">ADU Calculator</a></li>
+                        <li><a href="financing.html">Financing</a></li>
+                        <li><a href="Questionnaire_NewConstruction.html">Is ADU (Tiny Home) right for me?</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="section" style="padding-top: 4rem; background: var(--bg-light);">
+        <div class="container">
+            <h1 class="section-title">Nayalof Builders Blog</h1>
+            <p class="section-intro">Your trusted resource for home construction, renovations, and property improvement insights.</p>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section id="blog-listing" class="section" style="background: var(--bg-light); padding-top: 2rem;">
+        <div class="blog-container">
+            <!-- Main Blog Content -->
+            <div class="blog-main">
+                <!-- Blog Post 1: ADU vs Basement -->
+                <article class="blog-post-card" data-category="ADUs">
+                    <img src="images/_ADU.png" alt="Accessory Dwelling Unit" class="blog-post-image">
+                    <div class="blog-post-content" style="flex: 1; display: flex; flex-direction: column;">
+                        <div class="blog-post-meta">ADUs (Granny-Flats/Tiny Homes) • January 2026</div>
+                        <h2 class="blog-post-title">🏡 ADU vs. Basement Apartment: Which Rental Option Pays You Back Faster?</h2>
+                        <p class="blog-post-excerpt" style="flex: 1;">
+                            If you're a Maryland homeowner looking to generate passive income, two top contenders are Accessory Dwelling Units (ADUs) and basement apartments. Both can bring in $1,100–$1,500/month depending on location, finish quality, and amenities—but the path to profitability differs. Compare upfront costs, financing options, speed to income, and long-term value to make the right choice for your property.
+                        </p>
+                        <a href="#blog-adu-vs-basement-article" class="blog-read-more">Read More →</a>
+                    </div>
+                </article>
+
+                <!-- Blog Post 2: Backyard Shed -->
+                <article class="blog-post-card" data-category="Storage Shed">
+                    <img src="images/HeartlandLancaster.jpg" alt="Backyard Shed with String Lights" class="blog-post-image">
+                    <div class="blog-post-content" style="flex: 1; display: flex; flex-direction: column;">
+                        <div class="blog-post-meta">Storage Shed • January 2026</div>
+                        <h2 class="blog-post-title">🏡 Is a Backyard Shed Worth It? 5 Surprising Uses That Boost Property Value</h2>
+                        <p class="blog-post-excerpt" style="flex: 1;">
+                            A backyard shed isn't just for storing lawn tools—it's a smart, low-cost way to expand your home's functionality and appeal. Whether you're tight on space or planning for resale, sheds offer surprising versatility. Here are five high-impact uses: Home Office, Workshop, Yoga Studio, Art Studio, and Garden Lounge. Most sheds under 200 sq ft in Maryland don't require a building permit, though a zoning certificate may be needed. That means faster installation—typically 2–3 days—and fewer regulatory hurdles. Financing is simple: with 10-year terms at 10% APR, a $4,799 shed costs around $63/month.
+                        </p>
+                        <a href="#blog-shed-article" class="blog-read-more">Read More →</a>
+                    </div>
+                </article>
+
+                <!-- Blog Post 3: Basement Renovation ROI -->
+                <article class="blog-post-card" data-category="Residential Renovations">
+                    <img src="images/_Basement.png" alt="Basement Renovation" class="blog-post-image">
+                    <div class="blog-post-content" style="flex: 1; display: flex; flex-direction: column;">
+                        <div class="blog-post-meta">Residential Renovations • January 2026</div>
+                        <h2 class="blog-post-title">🏠 Basement Renovation ROI: What Maryland Homeowners Can Expect in 2026</h2>
+                        <p class="blog-post-excerpt" style="flex: 1;">
+                            For Maryland homeowners looking to add value, comfort, and income potential to their property, basement renovations continue to be one of the smartest investments heading into 2026. With housing demand still strong and families seeking more functional space, a finished basement offers both immediate lifestyle benefits and long-term financial returns. Learn why basements deliver strong ROI, rental income potential, and financing options.
+                        </p>
+                        <a href="#blog-basement-roi-article" class="blog-read-more">Read More →</a>
+                    </div>
+                </article>
+
+                <!-- Blog Post 4: ADU Vacation Rental -->
+                <article class="blog-post-card" data-category="ADUs">
+                    <img src="images/_ADU.png" alt="ADU Vacation Rental" class="blog-post-image">
+                    <div class="blog-post-content" style="flex: 1; display: flex; flex-direction: column;">
+                        <div class="blog-post-meta">ADUs (Granny-Flats/Tiny Homes) • January 2026</div>
+                        <h2 class="blog-post-title">🏖️ How to Turn Your ADU (Granny Flat) Into a Vacation Rental — Even If You're New to Airbnb</h2>
+                        <p class="blog-post-excerpt" style="flex: 1;">
+                            If you own an ADU—or you're thinking about building one—you're sitting on one of the most profitable opportunities available to Maryland homeowners. With millions of visitors traveling to Washington D.C., Baltimore, Annapolis, and the Chesapeake Bay, short-term rentals are in high demand. A well-designed ADU can earn higher nightly rates than traditional long-term rentals, especially during peak seasons.
+                        </p>
+                        <a href="#blog-adu-vacation-rental-article" class="blog-read-more">Read More →</a>
+                    </div>
+                </article>
+
+                <!-- Blog Post 5: Shed vs Garage -->
+                <article class="blog-post-card" data-category="Storage Shed">
+                    <img src="images/_Shed.png.png" alt="Storage Shed vs Garage Comparison" class="blog-post-image">
+                    <div class="blog-post-content" style="flex: 1; display: flex; flex-direction: column;">
+                        <div class="blog-post-meta">Storage Shed • January 2026</div>
+                        <h2 class="blog-post-title">🏗️ Shed vs. Garage: Which Is Right for Your Property?</h2>
+                        <p class="blog-post-excerpt" style="flex: 1;">
+                            Choosing between a shed and a garage comes down to how you plan to use the space, what your property allows, and how much you want to invest. Both options add value, but they serve different purposes—and the right choice can save you money while giving you exactly the functionality you need. Learn when a shed makes more sense versus when a garage is the better investment.
+                        </p>
+                        <a href="#blog-shed-vs-garage-article" class="blog-read-more">Read More →</a>
+                    </div>
+                </article>
+
+                <!-- Blog Post 6: Wooden Batting Cages -->
+                <article class="blog-post-card" data-category="Batting Cage">
+                    <img src="images/Boy_pitching_8x16x24.png" alt="Boy pitching in wooden batting cage" class="blog-post-image">
+                    <div class="blog-post-content" style="flex: 1; display: flex; flex-direction: column;">
+                        <div class="blog-post-meta">Batting Cage • February 2026</div>
+                        <h2 class="blog-post-title">⚾ Why Our Wooden Batting Cages Are a Game-Changer</h2>
+                        <p class="blog-post-excerpt" style="flex: 1;">
+                            Our batting cages are built from pressure-treated 2" × 2" lumber for a warm, natural look that fits any backyard. They're affordable, freestanding (no drilling required), and built to handle wind, snow, and UV—with a modular design that lets you add pitching machines, turf, or backstops over time.
+                        </p>
+                        <a href="#blog-batting-cage-article" class="blog-read-more">Read More →</a>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="blog-sidebar">
+                <div class="sidebar-widget">
+                    <h3>Categories</h3>
+                    <ul class="category-list">
+                        <li class="category-item">
+                            <a href="#storage-shed" class="category-link">
+                                <span>Storage Shed</span>
+                                <span class="category-count">2</span>
+                            </a>
+                        </li>
+                        <li class="category-item">
+                            <a href="#adus" class="category-link">
+                                <span>ADUs (Granny-Flats/Tiny Homes)</span>
+                                <span class="category-count">2</span>
+                            </a>
+                        </li>
+                        <li class="category-item">
+                            <a href="#renovations" class="category-link">
+                                <span>Residential Renovations</span>
+                                <span class="category-count">1</span>
+                            </a>
+                        </li>
+                        <li class="category-item">
+                            <a href="#batting-cage" class="category-link">
+                                <span>Batting Cage</span>
+                                <span class="category-count">1</span>
+                            </a>
+                        </li>
+                        <li class="category-item">
+                            <a href="#miscellaneous" class="category-link">
+                                <span>Miscellaneous/Others</span>
+                                <span class="category-count">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <!-- Full Blog Article (Hidden by default, shown when "Read More" is clicked) -->
+    <section id="blog-adu-vs-basement-article" class="section" style="display: none; background: white;">
+        <div class="container" style="max-width: 800px;">
+            <article style="padding: var(--spacing-lg) 0;">
+                <div style="margin-bottom: var(--spacing-md);">
+                    <a href="blog.html" class="blog-read-more" style="margin-bottom: var(--spacing-md); display: inline-block;">← Back to Blog</a>
+                </div>
+                <div class="blog-post-meta" style="margin-bottom: var(--spacing-sm);">ADUs (Granny-Flats/Tiny Homes) • January 2026</div>
+                <h1 class="section-title" style="text-align: left; margin-bottom: var(--spacing-md);">🏡 ADU vs. Basement Apartment: Which Rental Option Pays You Back Faster?</h1>
+                
+                <img src="images/_ADU.png" alt="Accessory Dwelling Unit" style="width: 100%; height: 400px; object-fit: cover; border-radius: var(--radius-lg); margin-bottom: var(--spacing-lg);">
+                
+                <div style="line-height: 1.8; color: var(--text-dark); font-size: 1.125rem;">
+                    <p style="margin-bottom: var(--spacing-md);">
+                        If you're a Maryland homeowner looking to generate passive income, two top contenders are <strong>Accessory Dwelling Units (ADUs)</strong> and <strong>basement apartments</strong>. Both can bring in <strong>$1,100–$1,500/month</strong> depending on location, finish quality, and amenities—but the path to profitability differs.
+                    </p>
+                    
+                    <h2 style="font-size: 1.5rem; font-weight: 600; color: var(--text-dark); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">🔹 Upfront Costs</h2>
+                    
+                    <ul style="margin-bottom: var(--spacing-md); padding-left: var(--spacing-lg);">
+                        <li style="margin-bottom: var(--spacing-sm);"><strong>Basement Renovation:</strong> Typically <strong>$40K–$70K</strong> for a full conversion with separate entrance, bathroom, and kitchenette.</li>
+                        <li style="margin-bottom: var(--spacing-sm);"><strong>ADU Build:</strong> Detached units range from <strong>$100K–$160K+</strong>, depending on size and site prep.</li>
+                    </ul>
+                    
+                    <h2 style="font-size: 1.5rem; font-weight: 600; color: var(--text-dark); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">🔹 Financing Options</h2>
+                    
+                    <ul style="margin-bottom: var(--spacing-md); padding-left: var(--spacing-lg);">
+                        <li style="margin-bottom: var(--spacing-sm);"><strong>HELOC or Home Equity Loan:</strong> Ideal for homeowners with built-up equity.</li>
+                        <li style="margin-bottom: var(--spacing-sm);"><strong>RenoFi-style Renovation Loans:</strong> Use future appraised value to borrow more.</li>
+                        <li style="margin-bottom: var(--spacing-sm);"><strong>Builder Financing:</strong> Some ADU builders offer turnkey financing with fixed monthly payments.</li>
+                    </ul>
+                    
+                    <img src="images/_Basement.png" alt="Basement Apartment Renovation" style="width: 100%; height: 300px; object-fit: cover; border-radius: var(--radius-lg); margin: var(--spacing-lg) 0;">
+                    
+                    <h2 style="font-size: 1.5rem; font-weight: 600; color: var(--text-dark); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">🔹 Speed to Income</h2>
+                    
+                    <ul style="margin-bottom: var(--spacing-md); padding-left: var(--spacing-lg);">
+                        <li style="margin-bottom: var(--spacing-sm);"><strong>Basement Apartment:</strong> Faster ROI due to lower cost and quicker build time (often <strong>6–8 weeks</strong>).</li>
+                        <li style="margin-bottom: var(--spacing-sm);"><strong>ADU:</strong> Higher long-term value, especially if used for short-term rentals near D.C., Baltimore, or the Bay.</li>
+                    </ul>
+                    
+                    <h2 style="font-size: 1.5rem; font-weight: 600; color: var(--text-dark); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">🔹 Long-Term Value</h2>
+                    
+                    <ul style="margin-bottom: var(--spacing-md); padding-left: var(--spacing-lg);">
+                        <li style="margin-bottom: var(--spacing-sm);">ADUs add square footage and resale appeal.</li>
+                        <li style="margin-bottom: var(--spacing-sm);">Basement units are great for multigenerational living or long-term tenants.</li>
+                    </ul>
+                    
+                    <div style="background: var(--secondary-green-light); padding: var(--spacing-md); border-radius: var(--radius-lg); border-left: 4px solid var(--secondary-green); margin: var(--spacing-lg) 0;">
+                        <p style="margin: 0; font-weight: 600; color: var(--secondary-green); font-size: 1.125rem;">
+                            <strong>Bottom Line:</strong><br>
+                            If speed and budget matter, a basement apartment may pay you back faster. If you're thinking long-term equity and flexibility, an ADU could be the smarter investment.
+                        </p>
+                    </div>
+                    
+                    <p style="margin-bottom: var(--spacing-md); font-style: italic; color: var(--text-gray);">
+                        Want help modeling ROI or exploring financing options? Let's break it down together.
+                    </p>
+                    
+                    <div style="margin-top: var(--spacing-lg); padding-top: var(--spacing-md); border-top: 2px solid var(--border-color);">
+                        <a href="calculator.html" class="btn btn-primary" style="margin-right: var(--spacing-sm);">Calculate ADU ROI</a>
+                        <a href="financing.html" class="btn btn-secondary" style="margin-right: var(--spacing-sm);">Explore Financing</a>
+                        <a href="residential-renovations.html" class="btn btn-secondary">Basement Renovations</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section id="blog-basement-roi-article" class="section" style="display: none; background: white;">
+        <div class="container" style="max-width: 800px;">
+            <article style="padding: var(--spacing-lg) 0;">
+                <div style="margin-bottom: var(--spacing-md);">
+                    <a href="blog.html" class="blog-read-more" style="margin-bottom: var(--spacing-md); display: inline-block;">← Back to Blog</a>
+                </div>
+                <div class="blog-post-meta" style="margin-bottom: var(--spacing-sm);">Residential Renovations • January 2026</div>
+                <h1 class="section-title" style="text-align: left; margin-bottom: var(--spacing-md);">🏠 Basement Renovation ROI: What Maryland Homeowners Can Expect in 2026</h1>
+                
+                <img src="images/_Basement.png" alt="Finished Basement Renovation" style="width: 100%; height: 400px; object-fit: cover; border-radius: var(--radius-lg); margin-bottom: var(--spacing-lg);">
+                
+                <div style="line-height: 1.8; color: var(--text-dark); font-size: 1.125rem;">
+                    <p style="margin-bottom: var(--spacing-md);">
+                        For Maryland homeowners looking to add value, comfort, and income potential to their property, basement renovations continue to be one of the smartest investments heading into 2026. With housing demand still strong and families seeking more functional space, a finished basement offers both immediate lifestyle benefits and long-term financial returns.
+                    </p>
+                    
+                    <h2 style="font-size: 1.5rem; font-weight: 600; color: var(--text-dark); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">Why Basements Deliver Strong ROI</h2>
+                    
+                    <p style="margin-bottom: var(--spacing-md);">
+                        A finished basement increases your home's <em>usable</em> square footage without altering its footprint—something buyers love. Whether you convert the space into a family room, guest suite, home office, or rental unit, the added functionality boosts your home's marketability. In Maryland, homeowners typically see <strong>70% or more ROI</strong>, and even higher when the basement includes a bedroom, bathroom, or separate entrance.
+                    </p>
+                    
+                    <img src="images/Basement.jpeg" alt="Basement Apartment with Separate Entrance" style="width: 100%; height: 300px; object-fit: cover; border-radius: var(--radius-lg); margin: var(--spacing-lg) 0;">
+                    
+                    <h2 style="font-size: 1.5rem; font-weight: 600; color: var(--text-dark); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">Rental Income Potential</h2>
+                    
+                    <p style="margin-bottom: var(--spacing-md);">
+                        For those considering a basement apartment, the numbers get even more attractive. In Southern Maryland, a well-designed basement rental can bring in <strong>$1,100–$1,500 per month</strong>, depending on finishes and location. That income can offset your mortgage, fund future renovations, or serve as long-term passive income.
+                    </p>
+                    
+                    <h2 style="font-size: 1.5rem; font-weight: 600; color: var(--text-dark); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">Financing Your Basement Renovation</h2>
+                    
+                    <p style="margin-bottom: var(--spacing-sm);">You don't need cash on hand to start. Homeowners often use:</p>
+                    
+                    <ul style="margin-bottom: var(--spacing-md); padding-left: var(--spacing-lg);">
+                        <li style="margin-bottom: var(--spacing-sm);"><strong>Renovation Loans (RenoFi-style):</strong> Borrow based on <em>future</em> appraised value, ideal for full conversions.</li>
+                        <li style="margin-bottom: var(--spacing-sm);"><strong>HELOCs or Home Equity Loans:</strong> Great for those with built-up equity and predictable monthly payments.</li>
+                        <li style="margin-bottom: var(--spacing-sm);"><strong>Phased Budgeting:</strong> Break the project into stages—framing, electrical, drywall, flooring—to spread out costs without sacrificing quality.</li>
+                    </ul>
+                    
+                    <div style="background: var(--secondary-green-light); padding: var(--spacing-md); border-radius: var(--radius-lg); border-left: 4px solid var(--secondary-green); margin: var(--spacing-lg) 0;">
+                        <p style="margin: 0; font-weight: 600; color: var(--secondary-green); font-size: 1.125rem;">
+                            <strong>The Bottom Line</strong><br>
+                            A basement renovation in 2026 isn't just a cosmetic upgrade—it's a strategic investment. You gain livable space today, rental income tomorrow, and a stronger resale position whenever you decide to move. For Maryland homeowners, it's one of the highest-value projects you can take on.
+                        </p>
+                    </div>
+                    
+                    <div style="margin-top: var(--spacing-lg); padding-top: var(--spacing-md); border-top: 2px solid var(--border-color);">
+                        <a href="residential-renovations.html" class="btn btn-primary" style="margin-right: var(--spacing-sm);">Explore Basement Renovations</a>
+                        <a href="financing.html" class="btn btn-secondary" style="margin-right: var(--spacing-sm);">Learn About Financing</a>
+                        <a href="Questionnaire_HomeImprovement.html" class="btn btn-secondary">Get a Free Quote</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section id="blog-adu-vacation-rental-article" class="section" style="display: none; background: white;">
+        <div class="container" style="max-width: 800px;">
+            <article style="padding: var(--spacing-lg) 0;">
+                <div style="margin-bottom: var(--spacing-md);">
+                    <a href="blog.html" class="blog-read-more" style="margin-bottom: var(--spacing-md); display: inline-block;">← Back to Blog</a>
+                </div>
+                <div class="blog-post-meta" style="margin-bottom: var(--spacing-sm);">ADUs (Granny-Flats/Tiny Homes) • January 2026</div>
+                <h1 class="section-title" style="text-align: left; margin-bottom: var(--spacing-md);">🏖️ How to Turn Your ADU (Granny Flat) Into a Vacation Rental — Even If You're New to Airbnb</h1>
+                
+                <img src="images/_ADU.png" alt="ADU Vacation Rental Exterior" style="width: 100%; height: 400px; object-fit: cover; border-radius: var(--radius-lg); margin-bottom: var(--spacing-lg);">
+                
+                <div style="line-height: 1.8; color: var(--text-dark); font-size: 1.125rem;">
+                    <p style="margin-bottom: var(--spacing-md);">
+                        If you own an ADU—or you're thinking about building one—you're sitting on one of the most profitable opportunities available to Maryland homeowners. With millions of visitors traveling to <strong>Washington D.C., Baltimore, Annapolis, and the Chesapeake Bay</strong>, short‑term rentals are in high demand. A well-designed ADU can earn <strong>higher nightly rates</strong> than traditional long‑term rentals, especially during peak seasons like summer, holidays, and major events.
+                    </p>
+                    
+                    <h2 style="font-size: 1.5rem; font-weight: 600; color: var(--text-dark); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">Why ADUs Make Great Vacation Rentals</h2>
+                    
+                    <p style="margin-bottom: var(--spacing-md);">
+                        ADUs offer privacy, convenience, and a "home away from home" feel that travelers love. Guests get their own entrance, kitchen, and living space—without the price tag of a hotel. For homeowners, this means:
+                    </p>
+                    
+                    <ul style="margin-bottom: var(--spacing-md); padding-left: var(--spacing-lg);">
+                        <li style="margin-bottom: var(--spacing-sm);">Flexible pricing based on seasons and events</li>
+                        <li style="margin-bottom: var(--spacing-sm);">Higher occupancy rates near major attractions</li>
+                        <li style="margin-bottom: var(--spacing-sm);">The ability to block off dates for family use</li>
+                    </ul>
+                    
+                    <p style="margin-bottom: var(--spacing-md);">
+                        In Southern Maryland, many ADU hosts see returns that outperform long‑term rentals by a wide margin.
+                    </p>
+                    
+                    <img src="images/ComboImage.png" alt="ADU Interior with Modern Furnishings" style="width: 100%; height: 300px; object-fit: cover; border-radius: var(--radius-lg); margin: var(--spacing-lg) 0;">
+                    
+                    <h2 style="font-size: 1.5rem; font-weight: 600; color: var(--text-dark); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">Financing Your ADU (Even If You're Starting From Scratch)</h2>
+                    
+                    <p style="margin-bottom: var(--spacing-sm);">You don't need to pay out of pocket to build or upgrade your ADU. Homeowners often use:</p>
+                    
+                    <ul style="margin-bottom: var(--spacing-md); padding-left: var(--spacing-lg);">
+                        <li style="margin-bottom: var(--spacing-sm);"><strong>Turnkey prefab ADUs</strong> with builder financing</li>
+                        <li style="margin-bottom: var(--spacing-sm);"><strong>RV‑style loans</strong> for movable tiny homes</li>
+                        <li style="margin-bottom: var(--spacing-sm);"><strong>HELOCs or home equity loans</strong> for stick‑built units</li>
+                    </ul>
+                    
+                    <p style="margin-bottom: var(--spacing-md);">
+                        Prefab ADUs are especially popular because they're fast, affordable, and can be installed with minimal disruption.
+                    </p>
+                    
+                    <h2 style="font-size: 1.5rem; font-weight: 600; color: var(--text-dark); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">Getting Started on Airbnb</h2>
+                    
+                    <p style="margin-bottom: var(--spacing-sm);">Once your ADU is ready:</p>
+                    
+                    <ul style="margin-bottom: var(--spacing-md); padding-left: var(--spacing-lg);">
+                        <li style="margin-bottom: var(--spacing-sm);">Furnish it with durable, hotel‑grade essentials</li>
+                        <li style="margin-bottom: var(--spacing-sm);">Add smart locks for easy check‑in</li>
+                        <li style="margin-bottom: var(--spacing-sm);">Hire a cleaner or use a turnover service</li>
+                        <li style="margin-bottom: var(--spacing-sm);">Take professional photos and highlight proximity to D.C., Baltimore, and the Bay</li>
+                    </ul>
+                    
+                    <div style="background: var(--primary-blue-light); padding: var(--spacing-md); border-radius: var(--radius-lg); border-left: 4px solid var(--primary-blue); margin: var(--spacing-lg) 0;">
+                        <p style="margin: 0; font-weight: 600; color: var(--primary-blue); font-size: 1.125rem;">
+                            <strong>The Bottom Line</strong><br>
+                            An ADU vacation rental can become a powerful income stream—one that grows your property value while generating cash flow. With the right financing and setup, even first‑time hosts can succeed.
+                        </p>
+                    </div>
+                    
+                    <div style="margin-top: var(--spacing-lg); padding-top: var(--spacing-md); border-top: 2px solid var(--border-color);">
+                        <a href="adu.html" class="btn btn-primary" style="margin-right: var(--spacing-sm);">Learn About ADUs</a>
+                        <a href="calculator.html" class="btn btn-secondary" style="margin-right: var(--spacing-sm);">Calculate ADU ROI</a>
+                        <a href="financing.html" class="btn btn-secondary">Explore Financing Options</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section id="blog-shed-vs-garage-article" class="section" style="display: none; background: white;">
+        <div class="container" style="max-width: 800px;">
+            <article style="padding: var(--spacing-lg) 0;">
+                <div style="margin-bottom: var(--spacing-md);">
+                    <a href="blog.html" class="blog-read-more" style="margin-bottom: var(--spacing-md); display: inline-block;">← Back to Blog</a>
+                </div>
+                <div class="blog-post-meta" style="margin-bottom: var(--spacing-sm);">Storage Shed • January 2026</div>
+                <h1 class="section-title" style="text-align: left; margin-bottom: var(--spacing-md);">🏗️ Shed vs. Garage: Which Is Right for Your Property?</h1>
+                
+                <img src="images/_Shed.jpg" alt="Storage Shed" style="width: 100%; height: 400px; object-fit: cover; border-radius: var(--radius-lg); margin-bottom: var(--spacing-lg);">
+                
+                <div style="line-height: 1.8; color: var(--text-dark); font-size: 1.125rem;">
+                    <p style="margin-bottom: var(--spacing-md);">
+                        Choosing between a shed and a garage comes down to how you plan to use the space, what your property allows, and how much you want to invest. Both options add value, but they serve different purposes—and the right choice can save you money while giving you exactly the functionality you need.
+                    </p>
+                    
+                    <h2 style="font-size: 1.5rem; font-weight: 600; color: var(--text-dark); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">When a Shed Makes More Sense</h2>
+                    
+                    <p style="margin-bottom: var(--spacing-md);">
+                        A shed is ideal for homeowners who need quick, affordable storage or a small workspace. Sheds typically cost far less than garages and can be built in <strong>2–3 days</strong>, making them one of the fastest upgrades you can add to your property. In many Maryland counties, sheds under <strong>200 sq. ft.</strong> don't require a building permit—though zoning rules still apply—so the process is simpler and faster.
+                    </p>
+                    
+                    <p style="margin-bottom: var(--spacing-md);">
+                        Financing is also easier on the wallet. A $5,000–$8,000 shed financed over <strong>10 years at 10% APR</strong> often comes out to <strong>$65–$105 per month</strong>, making it a low‑commitment improvement with high utility.
+                    </p>
+                    
+                    <img src="images/_Garage.png" alt="Car Garage" style="width: 100%; height: 300px; object-fit: cover; border-radius: var(--radius-lg); margin: var(--spacing-lg) 0;">
+                    
+                    <h2 style="font-size: 1.5rem; font-weight: 600; color: var(--text-dark); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">When a Garage Is the Better Investment</h2>
+                    
+                    <p style="margin-bottom: var(--spacing-md);">
+                        Garages offer full protection from weather, more enclosed space, and the ability to store vehicles, equipment, or create a workshop with power and insulation. They also add more resale value because they're considered permanent structures. However, they require permits, inspections, and a larger budget—often <strong>$25,000–$45,000+</strong> depending on size and finishes.
+                    </p>
+                    
+                    <p style="margin-bottom: var(--spacing-md);">
+                        Financed over 10 years, a garage may range from <strong>$330–$600 per month</strong>, but the long‑term value and functionality can justify the investment.
+                    </p>
+                    
+                    <div style="background: var(--primary-blue-light); padding: var(--spacing-md); border-radius: var(--radius-lg); border-left: 4px solid var(--primary-blue); margin: var(--spacing-lg) 0;">
+                        <p style="margin: 0; font-weight: 600; color: var(--primary-blue); font-size: 1.125rem;">
+                            <strong>The Bottom Line</strong><br>
+                            Choose a <strong>shed</strong> if you want fast, affordable storage or a small workspace with minimal red tape. Choose a <strong>garage</strong> if you need maximum protection, long‑term value, and a fully enclosed structure.
+                        </p>
+                    </div>
+                    
+                    <p style="margin-bottom: var(--spacing-md); font-style: italic; color: var(--text-gray);">
+                        If you want, I can help you compare both options based on your property size, zoning, and budget.
+                    </p>
+                    
+                    <div style="margin-top: var(--spacing-lg); padding-top: var(--spacing-md); border-top: 2px solid var(--border-color);">
+                        <a href="shed.html" class="btn btn-primary" style="margin-right: var(--spacing-sm);">Explore Storage Sheds</a>
+                        <a href="index.html#car-garage" class="btn btn-secondary" style="margin-right: var(--spacing-sm);">Learn About Garages</a>
+                        <a href="Questionnaire_HomeImprovement.html" class="btn btn-secondary">Get a Free Quote</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section id="blog-shed-article" class="section" style="display: none; background: white;">
+        <div class="container" style="max-width: 800px;">
+            <article style="padding: var(--spacing-lg) 0;">
+                <div style="margin-bottom: var(--spacing-md);">
+                    <a href="blog.html" class="blog-read-more" style="margin-bottom: var(--spacing-md); display: inline-block;">← Back to Blog</a>
+                </div>
+                <div class="blog-post-meta" style="margin-bottom: var(--spacing-sm);">Storage Shed • January 2026</div>
+                <h1 class="section-title" style="text-align: left; margin-bottom: var(--spacing-md);">🏡 Is a Backyard Shed Worth It? 5 Surprising Uses That Boost Property Value</h1>
+                
+                <img src="images/HeartlandLancaster.jpg" alt="Professionally built wooden shed with string lights and seating" style="width: 100%; height: 400px; object-fit: cover; border-radius: var(--radius-lg); margin-bottom: var(--spacing-lg);">
+                
+                <div style="line-height: 1.8; color: var(--text-dark); font-size: 1.125rem;">
+                    <p style="margin-bottom: var(--spacing-md);">
+                        A backyard shed isn't just for storing lawn tools—it's a smart, low-cost way to expand your home's functionality and appeal. Whether you're tight on space or planning for resale, sheds offer surprising versatility.
+                    </p>
+                    
+                    <h2 style="font-size: 1.5rem; font-weight: 600; color: var(--text-dark); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">Here are five high-impact uses:</h2>
+                    
+                    <ul style="margin-bottom: var(--spacing-md); padding-left: var(--spacing-lg);">
+                        <li style="margin-bottom: var(--spacing-sm);"><strong>Home Office:</strong> Escape distractions and work in peace.</li>
+                        <li style="margin-bottom: var(--spacing-sm);"><strong>Workshop:</strong> Perfect for DIYers or hobbyists.</li>
+                        <li style="margin-bottom: var(--spacing-sm);"><strong>Yoga Studio:</strong> Your own private wellness retreat.</li>
+                        <li style="margin-bottom: var(--spacing-sm);"><strong>Art Studio:</strong> Natural light + quiet = creative flow.</li>
+                        <li style="margin-bottom: var(--spacing-sm);"><strong>Garden Lounge:</strong> Add seating, string lights, and relax.</li>
+                    </ul>
+                    
+                    <img src="images/HeartlandCoronado.jpg" alt="Shed interior converted into a cozy home office" style="width: 100%; height: 300px; object-fit: cover; border-radius: var(--radius-lg); margin: var(--spacing-lg) 0;">
+                    
+                    <p style="margin-bottom: var(--spacing-md);">
+                        Most sheds under <strong>200 sq ft</strong> in Maryland don't require a building permit, though a zoning certificate may be needed. That means faster installation—typically <strong>2–3 days</strong>—and fewer regulatory hurdles.
+                    </p>
+                    
+                    <p style="margin-bottom: var(--spacing-md);">
+                        Financing is simple: with 10-year terms at 10% APR, a $4,799 shed costs around <strong>$63/month</strong>. That's less than a gym membership or co-working space—and you own it.
+                    </p>
+                    
+                    <p style="margin-bottom: var(--spacing-md);">
+                        Plus, sheds add curb appeal and functional square footage, which buyers love. Whether you're staying or selling, it's a smart upgrade.
+                    </p>
+                    
+                    <div style="background: var(--primary-blue-light); padding: var(--spacing-md); border-radius: var(--radius-lg); border-left: 4px solid var(--primary-blue); margin: var(--spacing-lg) 0;">
+                        <p style="margin: 0; font-weight: 600; color: var(--primary-blue);">
+                            Let Nayalof Builders help you design the perfect shed—built fast, priced right, and ready to use.
+                        </p>
+                    </div>
+                    
+                    <div style="margin-top: var(--spacing-lg); padding-top: var(--spacing-md); border-top: 2px solid var(--border-color);">
+                        <a href="shed.html" class="btn btn-primary" style="margin-right: var(--spacing-sm);">View Our Sheds</a>
+                        <a href="Questionnaire_HomeImprovement.html" class="btn btn-secondary">Get a Free Quote</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section id="blog-batting-cage-article" class="section" style="display: none; background: white;">
+        <div class="container" style="max-width: 800px;">
+            <article style="padding: var(--spacing-lg) 0;">
+                <div style="margin-bottom: var(--spacing-md);">
+                    <a href="blog.html" class="blog-read-more" style="margin-bottom: var(--spacing-md); display: inline-block;">← Back to Blog</a>
+                </div>
+                <div class="blog-post-meta" style="margin-bottom: var(--spacing-sm);">Batting Cage • January 2026</div>
+                <h1 class="section-title" style="text-align: left; margin-bottom: var(--spacing-md);">⚾ Why Our Wooden Batting Cages Are a Game-Changer</h1>
+                
+                <img src="images/Boy_pitching_8x16x24.png" alt="Boy pitching in wooden batting cage" style="width: 100%; height: 400px; object-fit: cover; border-radius: var(--radius-lg); margin-bottom: var(--spacing-lg);">
+                
+                <div style="line-height: 1.8; color: var(--text-dark); font-size: 1.125rem;">
+                    <h2 style="font-size: 1.5rem; font-weight: 600; color: var(--text-dark); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">Natural Appeal Meets Practical Design</h2>
+                    
+                    <p style="margin-bottom: var(--spacing-md);">
+                        There's something timeless about the look and feel of wood. Our batting cages, built from <strong>pressure-treated 2" × 2" lumber</strong>, offer a warm, natural aesthetic that blends beautifully into any backyard or training space. Unlike cold metal or plastic PVC structures, wood adds character and charm—making your batting cage feel like a true part of your home environment.
+                    </p>
+                    
+                    <h2 style="font-size: 1.5rem; font-weight: 600; color: var(--text-dark); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">Affordable Without Compromise</h2>
+                    
+                    <p style="margin-bottom: var(--spacing-md);">
+                        Metal and PVC cages can be expensive—not just in materials, but in tools, anchors, and installation complexity. Our wooden cages are designed for <strong>affordability without sacrificing durability</strong>. Pressure-treated wood resists rot, insects, and moisture, making it ideal for outdoor use. And because we use standard 2" × 2" × 8' lumber, replacement and customization are easy and cost-effective.
+                    </p>
+                    
+                    <h2 style="font-size: 1.5rem; font-weight: 600; color: var(--text-dark); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">Built for Flexibility</h2>
+                    
+                    <p style="margin-bottom: var(--spacing-md);">
+                        One of the biggest advantages of our design? <strong>No drilling required.</strong>
+                    </p>
+                    
+                    <p style="margin-bottom: var(--spacing-md);">
+                        Our cages are freestanding and stable, meaning you don't have to bolt them into concrete or dig into your lawn. This makes them:
+                    </p>
+                    
+                    <ul style="margin-bottom: var(--spacing-md); padding-left: var(--spacing-lg);">
+                        <li style="margin-bottom: var(--spacing-sm);">Easy to relocate</li>
+                        <li style="margin-bottom: var(--spacing-sm);">Perfect for renters or temporary setups</li>
+                        <li style="margin-bottom: var(--spacing-sm);">Ideal for seasonal use or multi-purpose yards</li>
+                    </ul>
+                    
+                    <p style="margin-bottom: var(--spacing-md);">
+                        Whether you're shifting it across the yard or packing it away for winter, our cage moves when you do.
+                    </p>
+                    
+                    <h2 style="font-size: 1.5rem; font-weight: 600; color: var(--text-dark); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">Strong Enough for the Elements</h2>
+                    
+                    <p style="margin-bottom: var(--spacing-md);">
+                        Despite their lightweight appearance, these cages are built to handle real-world conditions:
+                    </p>
+                    
+                    <ul style="margin-bottom: var(--spacing-md); padding-left: var(--spacing-lg);">
+                        <li style="margin-bottom: var(--spacing-sm);">Reinforced framing resists wind and tipping</li>
+                        <li style="margin-bottom: var(--spacing-sm);">Optional roof bracing supports snow loads</li>
+                        <li style="margin-bottom: var(--spacing-sm);">Netting is tensioned and UV-resistant for long-term outdoor exposure</li>
+                    </ul>
+                    
+                    <h2 style="font-size: 1.5rem; font-weight: 600; color: var(--text-dark); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">A Cage That Grows With You</h2>
+                    
+                    <p style="margin-bottom: var(--spacing-md);">
+                        Whether you're training a young slugger or hosting weekend batting practice, our <strong>modular design</strong> lets you expand or upgrade over time. Add pitching machines, turf flooring, or backstops as needed—without starting from scratch.
+                    </p>
+                    
+                    <div style="background: var(--secondary-green-light); padding: var(--spacing-md); border-radius: var(--radius-lg); border-left: 4px solid var(--secondary-green); margin: var(--spacing-lg) 0;">
+                        <p style="margin: 0; font-weight: 600; color: var(--secondary-green); font-size: 1.125rem;">
+                            <strong>The Bottom Line</strong><br>
+                            Our wooden batting cages deliver natural appeal, affordability, and flexibility—with no drilling, no permanent footprint, and the strength to stand up to the elements. A cage that moves when you do and grows with your needs.
+                        </p>
+                    </div>
+                    
+                    <div style="margin-top: var(--spacing-lg); padding-top: var(--spacing-md); border-top: 2px solid var(--border-color);">
+                        <a href="batting-cage.html" class="btn btn-primary" style="margin-right: var(--spacing-sm);">Explore Batting Cages</a>
+                        <a href="Questionnaire_HomeImprovement.html" class="btn btn-secondary">Get a Free Quote</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Nayalof Builders</h4>
+                    <p>Maryland's trusted general contractor for ADUs, home improvement, and new construction.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="adu.html">ADUs</a></li>
+                        <li><a href="index.html#car-garage">Car Garages</a></li>
+                        <li><a href="shed.html">Storage Sheds</a></li>
+                        <li><a href="batting-cage.html">Batting Cages</a></li>
+                        <li><a href="residential-renovations.html">Residential Renovations</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="how-it-works.html">How It Works</a></li>
+                        <li><a href="financing.html">Financing</a></li>
+                        <li><a href="calculator.html">ADU Calculator</a></li>
+                        <li><a href="Questionnaire_NewConstruction.html">Is ADU (Tiny Home) right for me?</a></li>
+                        <li><a href="blog.html">Blog Articles</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Maryland</p>
+                    <p>Licensed & Insured</p>
+                    <div style="margin-top: var(--spacing-sm); display: flex; gap: var(--spacing-sm); align-items: center;">
+                        <a href="#" target="_blank" rel="noopener noreferrer" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: color 0.2s;" title="YouTube" onmouseover="this.style.color='#FF0000'" onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                        </a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: color 0.2s;" title="Instagram" onmouseover="this.style.color='#E4405F'" onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: color 0.2s;" title="Facebook" onmouseover="this.style.color='#1877F2'" onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: color 0.2s;" title="TikTok" onmouseover="this.style.color='#FE2C55'" onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <p style="margin-top: var(--spacing-sm); font-size: 0.9rem; color: rgba(255, 255, 255, 0.7);">MHIC: <span style="color: rgba(255, 255, 255, 0.9);">Pending</span></p>
+                    <p style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.7);">MHBR: <span style="color: rgba(255, 255, 255, 0.9);">Pending</span></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="copyright-year">2026</span> Nayalof Builders. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Handle "Read More" link clicks
+        document.querySelectorAll('.blog-read-more').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = href.substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    const blogListingSection = document.querySelector('.blog-container').closest('section');
+                    
+                    if (targetSection) {
+                        // Hide blog listing section
+                        const blogListing = document.getElementById('blog-listing');
+                        if (blogListing) {
+                            blogListing.style.display = 'none';
+                        }
+                        // Hide all other article sections
+                        document.querySelectorAll('section[id^="blog-"]').forEach(section => {
+                            if (section.id !== targetId) {
+                                section.style.display = 'none';
+                            }
+                        });
+                        // Show full article
+                        targetSection.style.display = 'block';
+                        // Scroll to top
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+
+        // Handle "Back to Blog" link clicks
+        document.querySelectorAll('a[href="blog.html"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // If we're on the same page, just show/hide sections
+                if (window.location.pathname.includes('blog.html') || window.location.href.includes('blog.html')) {
+                    e.preventDefault();
+                    // Hide all article sections
+                    document.querySelectorAll('section[id^="blog-"]').forEach(section => {
+                        if (section.id !== 'blog-listing') {
+                            section.style.display = 'none';
+                        }
+                    });
+                    // Show blog listing
+                    const blogListing = document.getElementById('blog-listing');
+                    if (blogListing) {
+                        blogListing.style.display = 'block';
+                    }
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
