@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="images/Favicon.png">
+    <title>Home Improvement Questionnaire - Nayalof Builders</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .progress-container {
+            background: var(--bg-light);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: var(--bg-gray);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            position: relative;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--secondary-green);
+            transition: width 0.3s ease;
+        }
+        .question-step {
+            display: none;
+        }
+        .question-step.active {
+            display: block;
+        }
+        .question-card {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--spacing-md);
+        }
+        .question-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-md);
+        }
+        .question-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-xs);
+        }
+        .form-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            justify-content: space-between;
+            margin-top: var(--spacing-lg);
+        }
+        .btn-nav {
+            padding: 0.875rem 2rem;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn-prev {
+            background: var(--bg-gray);
+            color: var(--text-dark);
+        }
+        .btn-prev:hover {
+            background: var(--text-gray);
+        }
+        .btn-next {
+            background: var(--primary-blue);
+            color: white;
+        }
+        .btn-next:hover {
+            background: var(--primary-blue-dark);
+        }
+        .btn-submit {
+            background: var(--secondary-green);
+            color: white;
+            width: 100%;
+        }
+        .btn-submit:hover {
+            background: #008a5a;
+        }
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+        }
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        .radio-option input, .checkbox-option input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        .radio-option label, .checkbox-option label {
+            cursor: pointer;
+            font-weight: normal;
+        }
+        .other-input {
+            margin-top: var(--spacing-sm);
+            width: 100%;
+            padding: 0.875rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            display: none;
+        }
+        .other-input.show {
+            display: block;
+        }
+        /* ADU Selection Card Styles */
+        .adu-option-card:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+        .adu-option-card:has(input:checked) {
+            border-color: var(--secondary-green);
+            border-width: 3px;
+            background: var(--secondary-green-light);
+        }
+        .adu-option-card:has(input:checked) h4 {
+            color: var(--secondary-green);
+        }
+        /* For browsers that don't support :has() */
+        .adu-option-card.selected {
+            border-color: var(--secondary-green);
+            border-width: 3px;
+            background: var(--secondary-green-light);
+        }
+        .adu-option-card.selected h4 {
+            color: var(--secondary-green);
+        }
+        .checkbox-consent {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--primary-blue-light);
+            border-radius: var(--radius-md);
+        }
+        .checkbox-consent input {
+            margin-top: 3px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        .checkbox-consent label {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Nayalof Builders</a>
+            <ul class="nav-menu">
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link">Home Improvement <span class="dropdown-arrow">▼</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="shed.html">Storage Shed</a></li>
+                        <li><a href="batting-cage.html">Batting Cage</a></li>
+                        <li><a href="residential-renovations.html">Residential Renovations</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link">New Construction <span class="dropdown-arrow">▼</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="adu.html">Accessory Dwelling Unit (Granny-Flat)</a></li>
+                        <li><a href="index.html#car-garage">Car Garage <img src="images/ComingSoon.png" alt="Coming Soon" style="height: 32px; vertical-align: middle; margin-left: 4px;"></a></li>
+                        <li><a href="index.html#single-family">Single-Family Residential <img src="images/ComingSoon.png" alt="Coming Soon" style="height: 32px; vertical-align: middle; margin-left: 4px;"></a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link">Learn More <span class="dropdown-arrow">▼</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="how-it-works.html">How It Works</a></li>
+                        <li><a href="calculator.html">ADU Calculator</a></li>
+                        <li><a href="financing.html">Financing</a></li>
+                        <li><a href="Questionnaire_NewConstruction.html">Is ADU (Tiny Home) right for me?</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Questionnaire Section -->
+    <section class="section">
+        <div class="calculator-container">
+            <div class="calculator-card">
+                <h1 class="calculator-title">Home Improvement Questionnaire</h1>
+                <p class="section-intro">Tell us about your renovation project so we can provide you with an accurate quote and timeline.</p>
+                
+                <!-- Progress Bar -->
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill" style="width: 20%;"></div>
+                    </div>
+                </div>
+
+                <form id="home-improvement-form">
+                    <!-- Step 1: Project Type -->
+                    <div class="question-step active" data-step="1">
+                        <div class="question-card">
+                            <h3 class="question-title">Step 1: Project Type</h3>
+                            <label class="question-label">What type of project are you interested in?</label>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" id="project-adu" name="project-type" value="adu" required>
+                                    <label for="project-adu">Accessory Dwelling Unit (Granny-Flat)</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="project-shed" name="project-type" value="shed" required>
+                                    <label for="project-shed">Shed Construction</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="project-batting" name="project-type" value="batting" required>
+                                    <label for="project-batting">Batting Cage</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="project-renovation" name="project-type" value="renovation" required>
+                                    <label for="project-renovation">Residential Renovations</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: ADU Selection (conditional - only for ADU) -->
+                    <div class="question-step" data-step="2" id="adu-selection-step" style="display: none;">
+                        <div class="question-card">
+                            <h3 class="question-title">Step 2: Select Your Floor Plan</h3>
+                            <label class="question-label">Choose your preferred ADU floor plan:</label>
+                            
+                            <div class="adu-selection-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--spacing-md); margin-top: var(--spacing-md);">
+                                <!-- The Sprout (swapped position) -->
+                                <label class="adu-option-card" style="display: flex; flex-direction: column; border: 2px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; transition: all 0.3s ease;">
+                                    <input type="radio" name="adu-plan" value="The Sprout" style="display: none;" required>
+                                    <div style="position: relative; width: 100%; height: 150px; overflow: hidden;">
+                                        <img src="images/Sprout_TinyHouse_FrontView.png" alt="The Sprout" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                    <div style="padding: var(--spacing-sm); background: white;">
+                                        <h4 style="font-weight: 700; color: var(--primary-blue); margin-bottom: var(--spacing-xs);">The Sprout</h4>
+                                        <p style="font-size: 0.875rem; color: var(--text-dark); font-weight: 600; margin-bottom: var(--spacing-xs);">2 Bedrooms • 1 Bathroom</p>
+                                        <p style="font-size: 1rem; color: var(--secondary-green); font-weight: 700; margin-bottom: var(--spacing-xs);">Starting from $129,900</p>
+                                        <p style="font-size: 0.875rem; color: var(--text-gray);">700 SF</p>
+                                    </div>
+                                </label>
+
+                                <!-- The Charmer -->
+                                <label class="adu-option-card" style="display: flex; flex-direction: column; border: 2px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; transition: all 0.3s ease;">
+                                    <input type="radio" name="adu-plan" value="The Charmer" style="display: none;" required>
+                                    <div style="position: relative; width: 100%; height: 150px; overflow: hidden;">
+                                        <img src="images/Charmer_TinyHouse_FrontView.png" alt="The Charmer" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                    <div style="padding: var(--spacing-sm); background: white;">
+                                        <h4 style="font-weight: 700; color: var(--primary-blue); margin-bottom: var(--spacing-xs);">The Charmer</h4>
+                                        <p style="font-size: 0.875rem; color: var(--text-dark); font-weight: 600; margin-bottom: var(--spacing-xs);">2 Bedrooms • 1 Bathroom</p>
+                                        <p style="font-size: 1rem; color: var(--secondary-green); font-weight: 700; margin-bottom: var(--spacing-xs);">Starting from $144,900</p>
+                                        <p style="font-size: 0.875rem; color: var(--text-gray);">800 SF</p>
+                                    </div>
+                                </label>
+
+                                <!-- The Nook (swapped position) -->
+                                <label class="adu-option-card" style="display: flex; flex-direction: column; border: 2px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; transition: all 0.3s ease;">
+                                    <input type="radio" name="adu-plan" value="The Nook" style="display: none;" required>
+                                    <div style="position: relative; width: 100%; height: 150px; overflow: hidden;">
+                                        <img src="images/Nook_TinyHouse_FrontView.png" alt="The Nook" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                    <div style="padding: var(--spacing-sm); background: white;">
+                                        <h4 style="font-weight: 700; color: var(--primary-blue); margin-bottom: var(--spacing-xs);">The Nook</h4>
+                                        <p style="font-size: 0.875rem; color: var(--text-dark); font-weight: 600; margin-bottom: var(--spacing-xs);">2 Bedrooms • 1 Bathroom</p>
+                                        <p style="font-size: 1rem; color: var(--secondary-green); font-weight: 700; margin-bottom: var(--spacing-xs);">Starting from $159,900</p>
+                                        <p style="font-size: 0.875rem; color: var(--text-gray);">900 SF</p>
+                                    </div>
+                                </label>
+
+                                <!-- The Nest -->
+                                <label class="adu-option-card" style="display: flex; flex-direction: column; border: 2px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; transition: all 0.3s ease;">
+                                    <input type="radio" name="adu-plan" value="The Nest" style="display: none;" required>
+                                    <div style="position: relative; width: 100%; height: 150px; overflow: hidden;">
+                                        <img src="images/Nest_TinyHouse_FrontView.png" alt="The Nest" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                    <div style="padding: var(--spacing-sm); background: white;">
+                                        <h4 style="font-weight: 700; color: var(--primary-blue); margin-bottom: var(--spacing-xs);">The Nest</h4>
+                                        <p style="font-size: 0.875rem; color: var(--text-dark); font-weight: 600; margin-bottom: var(--spacing-xs);">2 Bedrooms • 1 Bathroom</p>
+                                        <p style="font-size: 1rem; color: var(--secondary-green); font-weight: 700; margin-bottom: var(--spacing-xs);">Starting from $167,900</p>
+                                        <p style="font-size: 0.875rem; color: var(--text-gray);">950 SF</p>
+                                    </div>
+                                </label>
+
+                                <!-- The Haven -->
+                                <label class="adu-option-card" style="display: flex; flex-direction: column; border: 2px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; transition: all 0.3s ease;">
+                                    <input type="radio" name="adu-plan" value="The Haven" style="display: none;" required>
+                                    <div style="position: relative; width: 100%; height: 150px; overflow: hidden;">
+                                        <img src="images/Haven_TinyHouse_FrontView.png" alt="The Haven" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                    <div style="padding: var(--spacing-sm); background: white;">
+                                        <h4 style="font-weight: 700; color: var(--primary-blue); margin-bottom: var(--spacing-xs);">The Haven</h4>
+                                        <p style="font-size: 0.875rem; color: var(--text-dark); font-weight: 600; margin-bottom: var(--spacing-xs);">2 Bedrooms • 1 Bathroom</p>
+                                        <p style="font-size: 1rem; color: var(--secondary-green); font-weight: 700; margin-bottom: var(--spacing-xs);">Starting from $174,900</p>
+                                        <p style="font-size: 0.875rem; color: var(--text-gray);">1000 SF</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Renovation Type (conditional - only for residential renovations) -->
+                    <div class="question-step" data-step="2" id="renovation-type-step" style="display: none;">
+                        <div class="question-card">
+                            <h3 class="question-title">Step 2: Renovation Type</h3>
+                            <label class="question-label">Which type of renovation are you interested in? (Select all that apply)</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="renovation-basement" name="renovation-type" value="Basement Renovations">
+                                    <label for="renovation-basement">Basement Renovations</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="renovation-drywall" name="renovation-type" value="Drywall Install">
+                                    <label for="renovation-drywall">Drywall Install</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="renovation-framing" name="renovation-type" value="Interior Framing">
+                                    <label for="renovation-framing">Interior Framing</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="renovation-painting" name="renovation-type" value="Painting">
+                                    <label for="renovation-painting">Painting</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="renovation-flooring" name="renovation-type" value="Flooring">
+                                    <label for="renovation-flooring">Flooring</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="renovation-doors" name="renovation-type" value="Interior Door Install">
+                                    <label for="renovation-doors">Interior Door Install</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="renovation-other" name="renovation-type" value="Other">
+                                    <label for="renovation-other">Other</label>
+                                </div>
+                            </div>
+                            <input type="text" id="renovation-other-input" name="renovation-other-text" class="other-input" placeholder="Please specify your renovation need">
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Batting Cage Selection (conditional - only for batting cage) -->
+                    <div class="question-step" data-step="2" id="batting-selection-step" style="display: none;">
+                        <div class="question-card">
+                            <h3 class="question-title">Step 2: Batting Cage Selection</h3>
+                            <label class="question-label">Select your preferred batting cage package:</label>
+                            
+                            <div class="form-group" style="margin-top: var(--spacing-md);">
+                                <label for="batting-package" class="question-label">Package Model:</label>
+                                <select id="batting-package" name="batting-package" class="form-group input" style="width: 100%; padding: 0.875rem; border: 2px solid var(--border-color); border-radius: var(--radius-md); margin-top: var(--spacing-sm);" required>
+                                    <option value="">Choose a package...</option>
+                                    <option value="BC-1000" data-package="650" data-install="450">BC-1000 (8' × 8' × 16')</option>
+                                    <option value="BC-1500" data-package="950" data-install="650">BC-1500 (8' × 12' × 16')</option>
+                                    <option value="BC-2000" data-package="1300" data-install="1000">BC-2000 (8' × 16' × 16')</option>
+                                    <option value="BC-2500" data-package="1600" data-install="1100">BC-2500 (8' × 16' × 20')</option>
+                                    <option value="BC-3000" data-package="2000" data-install="1500">BC-3000 (8' × 16' × 24')</option>
+                                </select>
+                            </div>
+
+                            <div id="batting-price-display" style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--primary-blue-light); border-radius: var(--radius-md); display: none;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-sm);">
+                                    <span style="font-weight: 600; color: var(--primary-blue);">Package Cost (DIY Install):</span>
+                                    <span id="batting-package-price" style="font-size: 1.5rem; font-weight: 700; color: var(--primary-blue);">$0</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-weight: 600; color: var(--primary-blue);">Professional Install (add-on):</span>
+                                    <span id="batting-install-price" style="font-size: 1.25rem; font-weight: 600; color: var(--primary-blue);">$0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Shed Selection (conditional - only for shed construction) -->
+                    <div class="question-step" data-step="2" id="shed-selection-step" style="display: none;">
+                        <div class="question-card">
+                            <h3 class="question-title">Step 2: Shed Selection</h3>
+                            <label class="question-label">Select your preferred shed style and size:</label>
+                            
+                            <div class="form-group" style="margin-top: var(--spacing-md);">
+                                <label for="shed-style" class="question-label">Shed Style:</label>
+                                <select id="shed-style" name="shed-style" class="form-group input" style="width: 100%; padding: 0.875rem; border: 2px solid var(--border-color); border-radius: var(--radius-md); margin-top: var(--spacing-sm);" required>
+                                    <option value="">Choose a style...</option>
+                                    <option value="Lancaster">Lancaster Series</option>
+                                    <option value="Coronado">Coronado Series</option>
+                                    <option value="Monterra">Monterra Series</option>
+                                    <option value="Little Cottage">Little Cottage Series</option>
+                                    <option value="Estate">Estate Series</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group" style="margin-top: var(--spacing-md);">
+                                <label for="shed-size" class="question-label">Shed Size:</label>
+                                <select id="shed-size" name="shed-size" class="form-group input" style="width: 100%; padding: 0.875rem; border: 2px solid var(--border-color); border-radius: var(--radius-md); margin-top: var(--spacing-sm);" required>
+                                    <option value="">Choose a size...</option>
+                                </select>
+                            </div>
+
+                            <div id="shed-price-display" style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--primary-blue-light); border-radius: var(--radius-md); display: none;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-sm);">
+                                    <span style="font-weight: 600; color: var(--primary-blue);">Cash Price:</span>
+                                    <span id="shed-cash-price" style="font-size: 1.5rem; font-weight: 700; color: var(--primary-blue);">$0</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-weight: 600; color: var(--primary-blue);">Monthly Payment (10 years @ 10% APR):</span>
+                                    <span id="shed-monthly-payment" style="font-size: 1.25rem; font-weight: 600; color: var(--primary-blue);">$0/mo</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Timeline -->
+                    <div class="question-step" data-step="3" id="timeline-step">
+                        <div class="question-card">
+                            <h3 class="question-title" id="timeline-step-title">Step 3: Project Timeline</h3>
+                            <label class="question-label">When would you like to start your project?</label>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" id="timeline-7days" name="timeline" value="Within the next 7 days" required>
+                                    <label for="timeline-7days">Within the next 7 days</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="timeline-2-4weeks" name="timeline" value="Within the next 2-4 weeks">
+                                    <label for="timeline-2-4weeks">Within the next 2-4 weeks</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="timeline-30days" name="timeline" value="More than 30 days from now">
+                                    <label for="timeline-30days">More than 30 days from now</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="timeline-60days" name="timeline" value="More than 60 days from now">
+                                    <label for="timeline-60days">More than 60 days from now</label>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-top: var(--spacing-lg); padding-top: var(--spacing-md); border-top: 1px solid var(--border-color);">
+                                <label class="question-label">Preferred Start Date (Optional)</label>
+                                <input type="date" id="preferred-start-date" name="preferred-start-date" class="form-group input" style="width: 100%; padding: 0.875rem; border: 2px solid var(--border-color); border-radius: var(--radius-md); margin-top: var(--spacing-sm);">
+                            </div>
+                            
+                            <div style="margin-top: var(--spacing-md);">
+                                <label class="question-label">Desired Completion Date (Optional)</label>
+                                <input type="date" id="desired-completion-date" name="desired-completion-date" class="form-group input" style="width: 100%; padding: 0.875rem; border: 2px solid var(--border-color); border-radius: var(--radius-md); margin-top: var(--spacing-sm);">
+                            </div>
+                            
+                            <div style="margin-top: var(--spacing-md);">
+                                <label class="question-label">Seasonal Preference (Optional)</label>
+                                <select id="seasonal-preference" name="seasonal-preference" class="form-group input" style="width: 100%; padding: 0.875rem; border: 2px solid var(--border-color); border-radius: var(--radius-md); margin-top: var(--spacing-sm);">
+                                    <option value="">No preference</option>
+                                    <option value="Spring (March-May)">Spring (March-May)</option>
+                                    <option value="Summer (June-August)">Summer (June-August)</option>
+                                    <option value="Fall (September-November)">Fall (September-November)</option>
+                                    <option value="Winter (December-February)">Winter (December-February)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Budget (only for residential renovations) -->
+                    <div class="question-step" data-step="3" id="budget-step" style="display: none;">
+                        <div class="question-card">
+                            <h3 class="question-title" id="budget-step-title">Step 4: Estimated Budget</h3>
+                            <label class="question-label">What is your estimated budget for this project?</label>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" id="budget-less-3k" name="budget" value="Less than $3K" required>
+                                    <label for="budget-less-3k">Less than $3K</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="budget-3k-10k" name="budget" value="$3K - $10K">
+                                    <label for="budget-3k-10k">$3K - $10K</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="budget-10k-30k" name="budget" value="$10K - $30K">
+                                    <label for="budget-10k-30k">$10K - $30K</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="budget-30k-50k" name="budget" value="$30K - $50K">
+                                    <label for="budget-30k-50k">$30K - $50K</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="budget-50k-75k" name="budget" value="$50K - $75K">
+                                    <label for="budget-50k-75k">$50K - $75K</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="budget-75k-plus" name="budget" value="$75K or more">
+                                    <label for="budget-75k-plus">$75K or more</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3/4: Contact Information -->
+                    <div class="question-step" data-step="4" id="contact-step" style="display: none;">
+                        <div class="question-card">
+                            <h3 class="question-title" id="contact-step-title">Step 4: Contact Information</h3>
+                            <div class="form-group">
+                                <label class="question-label" for="contact-name">Your Name</label>
+                                <input type="text" id="contact-name" name="contact-name" required class="form-group input" style="width: 100%; padding: 0.875rem; border: 2px solid var(--border-color); border-radius: var(--radius-md); margin-top: var(--spacing-sm);">
+                            </div>
+                            <div class="form-group" style="margin-top: var(--spacing-md);">
+                                <label class="question-label" for="contact-email">Your Email</label>
+                                <input type="email" id="contact-email" name="contact-email" required class="form-group input" style="width: 100%; padding: 0.875rem; border: 2px solid var(--border-color); border-radius: var(--radius-md); margin-top: var(--spacing-sm);">
+                            </div>
+                            <div class="form-group" style="margin-top: var(--spacing-md);">
+                                <label class="question-label" for="contact-phone">Your Phone Number</label>
+                                <input type="tel" id="contact-phone" name="contact-phone" required class="form-group input" style="width: 100%; padding: 0.875rem; border: 2px solid var(--border-color); border-radius: var(--radius-md); margin-top: var(--spacing-sm);">
+                            </div>
+                            <div class="form-group" style="margin-top: var(--spacing-md);">
+                                <label class="question-label">Preferred Contact Method</label>
+                                <div class="radio-group" style="margin-top: var(--spacing-sm);">
+                                    <div class="radio-option">
+                                        <input type="radio" id="contact-method-email" name="contact-method" value="Email" checked>
+                                        <label for="contact-method-email">Email</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="contact-method-phone" name="contact-method" value="Phone">
+                                        <label for="contact-method-phone">Phone</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="contact-method-text" name="contact-method" value="Text Message">
+                                        <label for="contact-method-text">Text Message</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-top: var(--spacing-md);">
+                                <label class="question-label" for="additional-info">Additional Information (optional)</label>
+                                <textarea id="additional-info" name="additional-info" rows="4" placeholder="Share any additional details about your project (max 50 words)..." class="form-group input" style="width: 100%; padding: 0.875rem; border: 2px solid var(--border-color); border-radius: var(--radius-md); margin-top: var(--spacing-sm); resize: vertical;"></textarea>
+                                <div id="additional-info-count" style="font-size: 0.875rem; color: var(--text-gray); margin-top: var(--spacing-xs);">50 words remaining</div>
+                            </div>
+                            <div class="checkbox-consent">
+                                <input type="checkbox" id="financing-followup" name="financing-followup" value="yes">
+                                <label for="financing-followup">I'm interested in learning about financing options. Please follow up with financing information that may help with my project.</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="form-actions">
+                        <button type="button" class="btn-nav btn-prev" id="prev-btn" style="display: none;">Previous</button>
+                        <button type="button" class="btn-nav btn-next" id="next-btn">Next</button>
+                        <button type="submit" class="btn-nav btn-submit" id="submit-btn" style="display: none;">Submit Questionnaire</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Nayalof Builders</h4>
+                    <p>Maryland's trusted general contractor for ADUs, home improvement, and new construction.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="adu.html">ADUs</a></li>
+                        <li><a href="index.html#car-garage">Car Garages</a></li>
+                        <li><a href="shed.html">Storage Sheds</a></li>
+                        <li><a href="batting-cage.html">Batting Cages</a></li>
+                        <li><a href="residential-renovations.html">Residential Renovations</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="how-it-works.html">How It Works</a></li>
+                        <li><a href="financing.html">Financing</a></li>
+                        <li><a href="calculator.html">ADU Calculator</a></li>
+                        <li><a href="Questionnaire_NewConstruction.html">Is ADU (Tiny Home) right for me?</a></li>
+                        <li><a href="blog.html">Blog Articles</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Maryland</p>
+                    <p>Licensed & Insured</p>
+                    <div style="margin-top: var(--spacing-sm); display: flex; gap: var(--spacing-sm); align-items: center;">
+                        <a href="#" target="_blank" rel="noopener noreferrer" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: color 0.2s;" title="YouTube" onmouseover="this.style.color='#FF0000'" onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                        </a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: color 0.2s;" title="Instagram" onmouseover="this.style.color='#E4405F'" onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: color 0.2s;" title="Facebook" onmouseover="this.style.color='#1877F2'" onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: color 0.2s;" title="TikTok" onmouseover="this.style.color='#FE2C55'" onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <p style="margin-top: var(--spacing-sm); font-size: 0.9rem; color: rgba(255, 255, 255, 0.7);">MHIC: <span style="color: rgba(255, 255, 255, 0.9);">Pending</span></p>
+                    <p style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.7);">MHBR: <span style="color: rgba(255, 255, 255, 0.9);">Pending</span></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="copyright-year">2026</span> Nayalof Builders. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="Questionnaire_HomeImprovement.js"></script>
+</body>
+</html>
